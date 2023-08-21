@@ -17,6 +17,9 @@ public class SwiftWhatsappShare: NSObject, FlutterPlugin {
     } else if ("shareFile" == call.method) {
         self.result = result
         result(shareFile(call: call))
+    } else if ("isInstalled" == call.method) {
+        self.result = result
+        result(isInstalled(call: call))
     } else {
         result(FlutterMethodNotImplemented)
     }
@@ -112,6 +115,20 @@ public class SwiftWhatsappShare: NSObject, FlutterPlugin {
         }
 
         return true
+    }
+
+    public func isInstalled(call: FlutterMethodCall) -> Bool {
+        let appName = "whatsapp"
+        let appScheme = "\(appName)://"
+        let appUrl = URL(string: appScheme)
+
+        if UIApplication.shared.canOpenURL(appUrl! as URL)
+        {
+            return true
+        } else {
+            print("App not installed")
+            return false
+        }
     }
 
     private func presentActivityView(activityViewController: UIActivityViewController) {
